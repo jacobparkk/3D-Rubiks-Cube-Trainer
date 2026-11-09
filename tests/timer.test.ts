@@ -1,0 +1,3 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {Cube,parse} from '../src/cube.ts';import {caseState,catalog} from '../src/cfop.ts';import {SolveTimer} from '../src/solve-timer.ts';
+test('wall clock includes thinking time and freezes at solved',()=>{const timer=new SolveTimer(),cube=new Cube(caseState('t-perm'));timer.start(cube.facelets,1000);assert.equal(timer.splits.length,3);assert.equal(timer.elapsed(6000),5000);cube.algorithm(parse(catalog.find(c=>c.id==='t-perm')!.algorithm));timer.observe(cube.facelets,9000);assert.equal(timer.splits.at(-1)?.durationMs,8000);assert.equal(timer.elapsed(15000),8000);assert.throws(()=>timer.elapsed(14000));});
