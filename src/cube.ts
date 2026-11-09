@@ -93,7 +93,7 @@ export function validate(f:Uint8Array):void {
   if(co.reduce((a,b)=>a+b,0)%3||eo.reduce((a,b)=>a+b,0)%2||parity(cp)!==parity(ep)) throw new Error('Unreachable cube state');
 }
 export class Cube {
-  #facelets=solved();
+  #facelets: Uint8Array<ArrayBufferLike> = solved();
   constructor(facelets?:Uint8Array){if(facelets){validate(facelets);this.#facelets=facelets.slice();}}
   get facelets(){return this.#facelets.slice();}
   move(move:Move){this.#facelets=apply(this.#facelets,move);}
